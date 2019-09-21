@@ -1,9 +1,6 @@
 <template>
     <div id="chart">
         <b-container>
-            <h1>
-                Графики
-            </h1>
             <b-row>
                 <b-col>
                     <apexchart type=area  :options="chart1.chartOptions" :series="chart1.series" />

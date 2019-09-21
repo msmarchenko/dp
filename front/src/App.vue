@@ -2,17 +2,21 @@
   <div id="app">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
     <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-    <Charts />
+    <Home />
   </div>
 </template>
 
 <script>
   import Charts from './components/Charts.vue'
+  import WriteParams from './components/WriteParams.vue'
+  import Home from './components/Home.vue'
 
 export default {
   name: 'app',
   components: {
-    Charts
+    Home,
+    Charts,
+    WriteParams
   }
 }
 </script>
@@ -24,6 +28,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
