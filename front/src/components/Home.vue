@@ -56,7 +56,6 @@ export default {
             this.inputsEnable = !this.inputsEnable;
         },
         ShowGraphs() {
-            console.log("Graph")
             this.inputsEnable = !this.inputsEnable;
             return 1;
         }

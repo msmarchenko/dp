@@ -7,16 +7,12 @@
 </template>
 
 <script>
-  import Charts from './components/Charts.vue'
-  import WriteParams from './components/WriteParams.vue'
   import Home from './components/Home.vue'
 
 export default {
   name: 'app',
   components: {
     Home,
-    Charts,
-    WriteParams
   }
 }
 </script>
