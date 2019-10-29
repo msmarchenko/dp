@@ -6,12 +6,12 @@
                 <br>
                 <div style='border: 1px solid #ccc;padding-top: 50px;padding-bottom: 50px;'>
                     <b-form @submit="onSubmit" @reset="onReset" v-if="show">
-                      <b-form-group id="input-group-1">
+                      <!-- <b-form-group id="input-group-1">
                           <b-form-checkbox-group v-model="form.checked" id="checkboxes-4">
                             <b-form-checkbox value="me">Показатель качества</b-form-checkbox>
                             <b-form-checkbox value="that">Тех. Параметры</b-form-checkbox>
                           </b-form-checkbox-group>
-                      </b-form-group>
+                      </b-form-group> -->
                       <b-form-group id="input-group-2" class="col-3 offset-4" >
                           <calendar 
                           v-model="form.date"
@@ -33,7 +33,7 @@
                             <b-row >
                               <b-col cols="4" offset="1">
                                   <b-form-checkbox-group v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox v-for="(value, key, index) in params.Control" :value="value.id">{{value.name}}</b-form-checkbox>
+                                    <b-form-checkbox v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Control')">add all</b-button>
@@ -43,7 +43,7 @@
                               </b-col>
                               <b-col cols="4" offset="2" >
                                   <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox v-for="(value, key, index) in params.Quality" :value="value.id">{{value.name}}</b-form-checkbox>
+                                    <b-form-checkbox v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Quality')">add all</b-button>
@@ -93,14 +93,11 @@
             new Date(),
             new Date()
           ],
-          Param1: '',
-          Param2: '',
           algos: 'Linear Reg',
           params: {
             Control:[],
             Quality: []
-          },
-          checked: []
+          }
         },
         params: {
           Control:[],
@@ -129,7 +126,22 @@
       },
       onSubmit(evt) {
         evt.preventDefault()
-        alert(JSON.stringify(this.form))
+        // eslint-disable-next-line 
+
+        
+
+        
+        axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
+        .then(resp=>{
+          // eslint-disable-next-line
+          this.$store.dispatch('SAVE_TODO', resp.data);
+          
+        })
+        .catch(error=>{
+          // eslint-disable-next-line
+          console.warn(error);
+        })
+        console.log(JSON.stringify(this.form))
       },
       getParams(){
         var app = this;
@@ -138,7 +150,8 @@
           app.fillParams(resp['data']);
         })
         .catch(error=>{
-          // console.warn(error);
+          // eslint-disable-next-line
+          console.warn(error);
         })
       },
       fillParams(sources){
@@ -156,7 +169,7 @@
         this.form.Param1 = ''
         this.form.Param2 = ''
         this.form.Param3 = null
-        this.form.checked = []
+        // this.form.checked = []
         // Trick to reset/clear native browser form validation state
         this.show = false
         this.$nextTick(() => {

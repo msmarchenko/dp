@@ -3,7 +3,7 @@
         <b-container>
             <b-row>
                 <b-col>
-                    <apexchart type=area  :options="chart1.chartOptions" :series="chart1.series" />
+                    <apexchart type=scatter   :options="chart1.chartOptions" :series="chart1.series" />
                 </b-col>
                 <b-col>
                     <apexchart type=bar  :options="chart2.chartOptions" :series="chart2.series" />
@@ -22,42 +22,53 @@ export default {
     components: {
         apexchart: VueApexCharts,
     },
+    created(){
+        
+        this.dataShow = JSON.parse(this.$store.getters.DATASHOW);        
+        if(this.dataShow != null)
+        {
+            this.chart1.series[0].data = []
+            var app = this;
+            Object.values(this.dataShow.X_test).map(function(value, key) {
+                app.chart1.series[0].data.push([value[0], app.dataShow.y_test[key][0]])
+            });
+        }
+        console.l
+    },
     data() {
         return {
+            dataShow: null,
             chart1: 
             {
                 series: [
                     {
                     name: 'series1',
                     data: [100, 0, -100, 100, -100, 0, 100]
-                    }, {
-                    name: 'series2',
-                    data: [11, 32, 45, 32, 34, 52, 41]
-                    }
+                    }, 
+                    // {
+                    //     name: 'series2',
+                    //     data: [11, 32, 45, 32, 34, 52, 41]
+                    // }
                 ],
                 chartOptions: {
-                    dataLabels: {
-                        enabled: false
+                    chart: {
+                        zoom: {
+                        enabled: true,
+                        type: 'xy'
+                        }
                     },
-                    stroke: {
-                        curve: 'smooth'
-                    },
-
-
                     xaxis: {
-                        type: 'datetime',
-                        categories: ["2018-09-19T00:00:00", "2018-09-19T01:30:00", "2018-09-19T02:30:00",
-                        "2018-09-19T03:30:00", "2018-09-19T04:30:00", "2018-09-19T05:30:00",
-                        "2018-09-19T06:30:00"
-                        ],
+                        tickAmount: 10,
+                        labels: {
+                            formatter: function(val) {
+                                return parseFloat(val).toFixed(1)
+                            }
+                        }
                     },
-                    tooltip: {
-                        x: {
-                        format: 'dd/MM/yy HH:mm'
-                        },
-
+                    yaxis: {
+                        tickAmount: 7
                     }
-                }
+                }      
 
             },
             chart2:{

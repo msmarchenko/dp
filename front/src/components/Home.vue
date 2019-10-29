@@ -32,7 +32,7 @@
             <b-nav-item :active="!inputsEnable" @click="ShowGraphs">Графики</b-nav-item>
         </b-nav>
         <div v-if="inputsEnable">
-            <WriteParams></WriteParams>
+            <WriteParams ></WriteParams>
         </div>
          <div v-if="!inputsEnable">
             <Charts></Charts>

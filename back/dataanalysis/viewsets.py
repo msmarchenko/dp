@@ -16,6 +16,10 @@ from .serializers import OrderSerializer
 
 from .models import Measurements
 from .serializers import MeasurementsSerializer
+#странная конструкция ._.
+from .Calculations import Calculations
+
+import json
 
 class CompositionViewSet(viewsets.ModelViewSet):
     queryset = Composition.objects.all()
@@ -40,6 +44,8 @@ class MeasurementsViewSet(viewsets.ModelViewSet):
 class CalculateViewset(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def calc(self, request):
-        """GET - Show all users"""
-        print(request.data)
-        return Response(request.POST.items())
+        data = request.data
+        if data['algos'] == 'Linear Reg':
+            ret = Calculations.LinearReg(data['params'])
+            return Response(json.dumps(ret))
+        return Response(request.data)
