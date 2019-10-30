@@ -47,5 +47,5 @@ class CalculateViewset(viewsets.ViewSet):
         data = request.data
         if data['algos'] == 'Linear Reg':
             ret = Calculations.LinearReg(data['params'])
-            return Response(json.dumps(ret))
+            return Response(ret)
         return Response(request.data)

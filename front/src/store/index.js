@@ -18,7 +18,7 @@ export const store = new Vuex.Store({
     },
   },
   actions: {
-    SAVE_TODO: async (context, payload) => {        
+    SAVE_TODO: (context, payload) => {        
         context.commit('SET_DATASHOW', payload);
     },
   },
