@@ -25,6 +25,10 @@ class Calculations:
         
         df = pd.read_sql_query(query,conn)
         
+        date_X = df[df['parameter_id'] == params['Control'][0]]['date']
+        date_Y = df[df['parameter_id'] == params['Quality'][0]]['date']
+
+
         X = df[df['parameter_id'] == params['Control'][0]]
         X = X['value']
         y = df[df['parameter_id'] == params['Quality'][0]]
@@ -60,7 +64,8 @@ class Calculations:
             "y_pred":y_pred.tolist(),
             "false_positive_rate":fpr.tolist(),
             "true_postitve_rate":tpr.tolist(),
-            "roc_auc":roc_auc.tolist()
+            "roc_auc":roc_auc.tolist(),
+            "date": date_X.tolist()
         }
         return ret
         pass
