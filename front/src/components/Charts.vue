@@ -241,28 +241,9 @@ export default {
                     dataLabels: {
                         enabled: false
                     },
-                    // fill: {
-                    //     type: 'solid',
-                    // },
-                    // markers: {
-                    //     size: [6, 0]
-                    // },
-                    tooltip: {
-                        shared: false,
-                        intersect: true,
-                    },
-                    legend: {
-                        show: true
-                    },
                     xaxis: {
-                        // type: 'numeric',
                         type: 'datetime',
-                        // tickAmount: 12,
-                        // labels: {
-                        //     formatter: function(val) {
-                        //         return parseFloat(val).toFixed(1)
-                        //     }
-                        // }
+                        
                     },
                     yaxis: [
                         {                            
@@ -281,17 +262,15 @@ export default {
                             title: {
                                 text: "Predicts",
                                 style: {
-                                color: '#008FFB',
+                                    color: '#008FFB',
+                                },
+                                formatter: function(val) {
+                                    return parseFloat(val).toFixed(1)
                                 }
                             },
                             tooltip: {
                                 enabled: true
                             },
-                            labels: {
-                                formatter: function(val) {
-                                    return parseFloat(val).toFixed(1)
-                                }
-                            }
                         },
 
                         {
@@ -307,6 +286,9 @@ export default {
                             labels: {
                                 style: {
                                     color: '#00E396',
+                                },
+                                formatter: function(val) {
+                                    return parseFloat(val).toFixed(1)
                                 }
                             },
                             title: {
@@ -315,20 +297,18 @@ export default {
                                     color: '#00E396',
                                 }
                             },
-                            labels: {
-                                formatter: function(val) {
-                                    return parseFloat(val).toFixed(1)
-                                }
-                            }
                         },                        
                     ],
                     tooltip: {
+                        shared: false,
+                        intersect: true,
                         fixed: {
                         enabled: true,
                         position: 'topLeft', 
                         },
                     },
                     legend: {
+                        show: true,
                         horizontalAlign: 'center',
                     }   
                 }
@@ -372,10 +352,6 @@ export default {
                         width: [5, 7, 5],
                         curve: 'straight',
                         dashArray: [0, 8, 5]
-                    },               
-                    tooltip: {
-                        shared: false,
-                        intersect: true,
                     },
                     legend: {
                         show: false
@@ -404,6 +380,8 @@ export default {
                         },
                     },
                     tooltip: {
+                        shared: false,
+                        intersect: true,
                         fixed: {
                         enabled: false,
                         position: 'topLeft', 
