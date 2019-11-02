@@ -32,7 +32,7 @@
             <b-nav-item :active="!inputsEnable" @click="ShowGraphs">Графики</b-nav-item>
         </b-nav>
         <div v-if="inputsEnable">
-            <WriteParams ></WriteParams>
+            <WriteParams @calc="calcGood"></WriteParams>
         </div>
          <div v-if="!inputsEnable">
             <Charts></Charts>
@@ -52,6 +52,9 @@ export default {
         }
     },
     methods:{
+        calcGood(){
+            this.inputsEnable = !this.inputsEnable;
+        },
         ShowInputs(){
             this.inputsEnable = !this.inputsEnable;
         },
