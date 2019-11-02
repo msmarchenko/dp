@@ -182,41 +182,7 @@ export default {
                                     y: 11
                                 }]
                     },
-                    // {
-                    //     name: 'real',
-                    //     type: 'line',
-                    //     data: [{
-                    //                 x: 1,
-                    //                 y: 2
-                    //             }, {
-                    //                 x: 2,
-                    //                 y: 3
-                    //             }, {
-                    //                 x: 3,
-                    //                 y: 4
-                    //             }, {
-                    //                 x: 4,
-                    //                 y: 5
-                    //             }, {
-                    //                 x: 5,
-                    //                 y: 6
-                    //             }, {
-                    //                 x: 6,
-                    //                 y: 7
-                    //             }, {
-                    //                 x: 7,
-                    //                 y: 8
-                    //             }, {
-                    //                 x: 8,
-                    //                 y: 10
-                    //             }, {
-                    //                 x: 9,
-                    //                 y: 12
-                    //             }, {
-                    //                 x: 10,
-                    //                 y: 14
-                    //             }]
-                    // }
+                    
                 ],
                 
                 chartOptions: {
@@ -256,7 +222,10 @@ export default {
                             },
                             labels: {
                                 style: {
-                                color: '#008FFB',
+                                    color: '#008FFB',
+                                },
+                                formatter: function(val) {
+                                    return parseFloat(val).toFixed(1)
                                 }
                             },
                             title: {
@@ -264,9 +233,6 @@ export default {
                                 style: {
                                     color: '#008FFB',
                                 },
-                                formatter: function(val) {
-                                    return parseFloat(val).toFixed(1)
-                                }
                             },
                             tooltip: {
                                 enabled: true
@@ -295,7 +261,7 @@ export default {
                                 text: "real",
                                 style: {
                                     color: '#00E396',
-                                }
+                                },
                             },
                         },                        
                     ],
@@ -303,8 +269,8 @@ export default {
                         shared: false,
                         intersect: true,
                         fixed: {
-                        enabled: true,
-                        position: 'topLeft', 
+                            enabled: true,
+                            position: 'topLeft', 
                         },
                     },
                     legend: {
