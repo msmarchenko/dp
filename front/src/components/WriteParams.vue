@@ -103,7 +103,7 @@
           Control:[],
           Quality: []
         },
-        algos: ['Linear Reg', 'BANANA'],
+        algos: ['Linear Reg', 'Random Forest'],
         show: true
       }
     },
@@ -135,10 +135,11 @@
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('SAVE_TODO', resp.data);
-          
+          this.$emit('calc')
         })
         .catch(error=>{
           // eslint-disable-next-line
+          alert("С данными параметрами расчет не возможен")
           console.warn(error);
         })
         // eslint-disable-next-line
