@@ -35,7 +35,8 @@
             <WriteParams @calc="calcGood"></WriteParams>
         </div>
          <div v-if="!inputsEnable">
-            <Charts></Charts>
+            <!-- <Charts></Charts> -->
+            <component :is="componentsChart" v-if="componentsChart"/>
         </div>
     </div>
 </template>
@@ -44,15 +45,23 @@ export default {
     components: {
         WriteParams: () => import('./WriteParams.vue'),
         Charts: () => import('./Charts.vue'),
+        RandomForest: () => import('./ForestChart.vue'),
     },
     data(){
         
         return{
             inputsEnable: true,
+            componentsChart: null,
         }
     },
     methods:{
-        calcGood(){
+        calcGood(algos){
+            console.log("Algoritm", algos);
+            if(algos == "Random Forest"){
+                this.componentsChart = () => import('./ForestChart.vue');
+            }else{
+                this.componentsChart = () => import('./Charts.vue');
+            }
             this.inputsEnable = !this.inputsEnable;
         },
         ShowInputs(){
