@@ -126,16 +126,13 @@
       },
       onSubmit(evt) {
         evt.preventDefault()
-        // eslint-disable-next-line 
-
-        
-
-        
+        // eslint-disable-next-line         
+        var app = this;
         axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('SAVE_TODO', resp.data);
-          this.$emit('calc')
+          this.$emit('calc', app.form.algos);
         })
         .catch(error=>{
           // eslint-disable-next-line
