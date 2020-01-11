@@ -103,7 +103,7 @@
           Control:[],
           Quality: []
         },
-        algos: ['Linear Reg', 'Random Forest'],
+        algos: ['Linear Reg', 'Random Forest', 'Hist'],
         show: true
       }
     },
@@ -137,10 +137,11 @@
         .catch(error=>{
           // eslint-disable-next-line
           alert("С данными параметрами расчет не возможен")
+          // eslint-disable-next-line
           console.warn(error);
         })
         // eslint-disable-next-line
-        console.log(JSON.stringify(this.form))
+        // console.log(JSON.stringify(this.form))
       },
       getParams(){
         var app = this;
