@@ -18,6 +18,13 @@ class Calculations:
     def __init__(self):
         pass
 
+    def Hist(params):
+        ret = {
+            "x": np.random.random_integers(1, 100, 10),
+            "y": np.random.random_integers(1, 100, 10),            
+        }
+        return ret
+
     def LinearReg(params):
         #Сделал так потому что некогда разбираться как работают джанговские модели
         conn = sqlite3.connect('db.sqlite3')
