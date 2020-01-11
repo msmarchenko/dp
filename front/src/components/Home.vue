@@ -56,9 +56,11 @@ export default {
     },
     methods:{
         calcGood(algos){
-            console.log("Algoritm", algos);
+            // console.log("Algoritm", algos);
             if(algos == "Random Forest"){
                 this.componentsChart = () => import('./ForestChart.vue');
+            }else if(algos == "Hist"){                
+                this.componentsChart = () => import('./Hist.vue');
             }else{
                 this.componentsChart = () => import('./Charts.vue');
             }

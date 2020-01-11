@@ -48,4 +48,10 @@ class CalculateViewset(viewsets.ViewSet):
         if data['algos'] == 'Linear Reg':
             ret = Calculations.LinearReg(data['params'])
             return Response(ret)
+        if data['algos'] == "Random Forest":
+            ret = Calculations.LinearReg(data['params'])
+            return Response(ret)
+        if data['algos'] == "Hist":
+            ret = Calculations.Hist(data['params'])
+            return Response(ret)
         return Response(request.data)
