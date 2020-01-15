@@ -13,7 +13,7 @@
                           </b-form-checkbox-group>
                       </b-form-group> -->
                       <b-form-group id="input-group-2" class="col-3 offset-4" >
-                          <calendar 
+                          <calendar
                           v-model="form.date"
                           :range="true"
                           :lang="'rus'"
@@ -34,7 +34,7 @@
                               <b-col cols="6">
                                 Тех. Параметры
                               </b-col>
-                              <b-col cols="6">                                
+                              <b-col cols="6">
                                 Показатель качества
                               </b-col>
                             </b-row>
@@ -47,7 +47,7 @@
                                     <b-button variant="primary" @click="addAll('Control')">add all</b-button>
                                     <b-button variant="danger" @click="empty('Control')">add all</b-button>
                                   </div>
-                                  
+
                               </b-col>
                               <b-col cols="4" offset="2" >
                                   <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
@@ -71,7 +71,7 @@
                           ></b-form-select>
                       </b-form-group>
 
-                     
+
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
                     </b-form>
@@ -90,7 +90,7 @@
 <script>
   import axios from 'axios';
   import calendar from 'vue-datepicker-ui'
-  export default {  
+  export default {
     components: {
       calendar,
     },
@@ -106,14 +106,15 @@
             Control:[],
             Quality: []
           },
-          machine: []
+          machine: [],
         },
         params: {
           Control:[],
           Quality: []
         },
-        machine: [],
+
         algos: ['Linear Reg', 'Random Forest', 'Hist'],
+        machine: [],
         show: true
       }
     },
@@ -138,7 +139,7 @@
       },
       onSubmit(evt) {
         evt.preventDefault()
-        // eslint-disable-next-line         
+        // eslint-disable-next-line
         var app = this;
         axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
         .then(resp=>{
@@ -189,7 +190,7 @@
       fillMachine(sources){
         var app = this;
         sources.forEach(element => {
-          app.machine.push(element);
+          app.machine.push({text:element.name, value:element.id});
         })
         this.$nextTick(() => {
           this.show = true
