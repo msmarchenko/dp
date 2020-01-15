@@ -19,9 +19,50 @@ class Calculations:
         pass
 
     def Hist(params):
+        from .models import KPI, Machine
+        machine = Machine.objects.get(pk=params)
+        objects = KPI.objects.all().filter(werk=machine).filter(yields__lte=100)
+        table = {'rezeptur': [], 'yield': [], 'material': [], 'kd_name': []}
+        for object in objects:
+            table['rezeptur'].append(object.rezeptur)
+            table['yield'].append(object.yields)
+            table['material'].append(object.material)
+            table['kd_name'].append(object.kd_name)
+
+        table = pd.DataFrame.from_dict(table)
+        mean_rezeptur = table.groupby(['rezeptur']).mean().sort_values(by='yield', ascending=False)
+        mean_material = table.groupby(['material']).mean().sort_values(by='yield', ascending=False)
+        kd_name_size = table.groupby(['kd_name']).size().sort_values(ascending=False)
+        yields_rez = []
+        rezeptur = []
+        yields_mat = []
+        material = []
+        number_orders = []
+        kd_name = []
+        for i,(index,row) in enumerate(mean_rezeptur.iterrows()):
+            if i == 10:
+                break
+            yields_rez.append(int(row['yield']))
+            rezeptur.append(index)
+
+        for i,(index,row) in enumerate(mean_material.iterrows()):
+            if i == 10:
+                break
+            yields_mat.append(int(row['yield']))
+            material.append(index)
+
+        for i, (index, row) in enumerate(kd_name_size.iteritems()):
+            if i == 10:
+                break
+            kd_name.append(index)
+            number_orders.append(row)
         ret = {
-            "x": np.random.random_integers(1, 100, 10),
-            "y": np.random.random_integers(1, 100, 10),            
+            "x_rez": yields_rez,
+            "y_rez": rezeptur,
+            "x_mat": yields_mat,
+            "y_mat": material,
+            'x_kd_name': number_orders,
+            'y_kd': kd_name
         }
         return ret
 
