@@ -1,0 +1,3 @@
+back/db.3sqlite3
+back/*.sqlite3
+back/dataanalysis/__pycache__/
