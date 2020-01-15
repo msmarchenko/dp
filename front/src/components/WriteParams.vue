@@ -98,10 +98,10 @@
       return {
         form: {
           date:  [
-            new Date(),
-            new Date()
+            new Date(2015,5,16),
+            new Date(2015,5,17)
           ],
-          algos: 'Linear Reg',
+          algos: 'Umap',
           params: {
             Control:[],
             Quality: []
@@ -113,7 +113,7 @@
           Quality: []
         },
 
-        algos: ['Linear Reg', 'Random Forest', 'Hist'],
+        algos: ['Umap', 'Random Forest', 'Hist'],
         machine: [],
         show: true
       }

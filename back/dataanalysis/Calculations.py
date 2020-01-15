@@ -2,6 +2,10 @@ from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.metrics import roc_curve, auc
 import numpy as np
+import datetime
+import umap
+
+import joblib
 
 import sqlite3
 import pandas as pd
@@ -17,6 +21,88 @@ class Calculations:
 
     def __init__(self):
         pass
+    
+    def CalcUmap(params):
+        from sklearn.preprocessing import StandardScaler, MinMaxScaler
+        nRowsRead = 1000 
+        df1 = pd.read_csv('Control.csv', delimiter=',', nrows = nRowsRead)
+        df1.dataframeName = 'Control.csv'
+        nRow, nCol = df1.shape
+        print(f'There are {nRow} rows and {nCol} columns')
+
+        df2 = pd.read_csv('Quality.csv', delimiter='\t', nrows = nRowsRead)
+        df2.dataframeName = 'Quality.csv'
+        nRow, nCol = df2.shape
+        print(f'There are {nRow} rows and {nCol} columns')
+
+        df_quality = df2
+        df_control = df1
+        df_quality = df_quality.drop(['Unnamed: 0'], axis=1)
+        df_control = df_control.drop('date', axis=1)
+        df_quality = df_quality.set_index('date')
+        stp_str = 'Stippe_-3000'
+        treshold = 47.5
+        df_quality[df_quality[stp_str] > treshold][stp_str]
+        color = np.where(df_quality[stp_str] > treshold ,'red','black')
+        sc = StandardScaler()
+        arr_control = sc.fit_transform(df_control)
+        arr_quality = sc.fit_transform(df_quality)
+
+        df_control = pd.DataFrame(arr_control, columns=df_control.columns, index= df_control.index)
+        df_quality = pd.DataFrame(arr_quality, columns=df_quality.columns, index= df_quality.index)
+
+        filename = 'this_basic_umap.sav'
+        fit = joblib.load(filename)
+        df_control = df_control.drop(['Unnamed: 0'], axis=1)
+        # print(df_control.columns)
+        embedding = fit.transform(df_control)
+        # print(embedding[:1])
+        ret = pd.DataFrame(data=embedding, columns=['x', 'y'])
+        ret['color']=color
+        print(ret[ret['color']=='red']['x'])
+        returns = {
+            'basic_umap': {
+                'black':{
+                    'x': ret[ret['color']=='black']['x'],
+                    'y': ret[ret['color']=='black']['y'],
+                }, 
+                'red':{
+                    'x': ret[ret['color']=='red']['x'],
+                    'y': ret[ret['color']=='red']['y'],
+                }
+            }
+        }
+
+        df_stippe = df_quality[stp_str]
+        df_control = df_control.fillna(0)
+        df_stippe = df_stippe.fillna(0)
+        lasso = linear_model.Lasso(alpha=0.1, tol=0.2)
+        lasso.fit(df_control,df_stippe)
+
+        top_param_lasso = pd.DataFrame([df_control.columns, lasso.coef_]).T
+        top_param_lasso.columns = ['param', 'coef']
+        top_param_lasso =  top_param_lasso[top_param_lasso['coef'] > 0 ]
+
+        df_select_lasso = df_control[top_param_lasso['param']]
+
+        returns['top_parametr_lasso'] = df_select_lasso.columns
+        df_stippe = pd.DataFrame(df_stippe)
+
+        filename = 'this_afterLasso_umap.sav'
+        # embedding_lasso = joblib.load(filename)
+        # embedding_lasso = fit.transform(df_select_lasso)
+        print(df_select_lasso.head())
+        # ret = pd.DataFrame(data=embedding_lasso, columns=['x', 'y'])
+        # ret['color']=color
+        # returns['lasso_umap']['black']['x'] = ret[ret['color']=='black']['x']
+        # returns['lasso_umap']['black']['y'] = ret[ret['color']=='black']['y']
+        # returns['lasso_umap']['red']['x'] = ret[ret['color']=='red']['x']
+        # returns['lasso_umap']['red']['y'] = ret[ret['color']=='red']['y']
+
+        
+        return returns
+
+
 
     def Hist(params):
         from .models import KPI, Machine
