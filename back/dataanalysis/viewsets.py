@@ -52,6 +52,6 @@ class CalculateViewset(viewsets.ViewSet):
             ret = Calculations.LinearReg(data['params'])
             return Response(ret)
         if data['algos'] == "Hist":
-            ret = Calculations.Hist(data['params'])
+            ret = Calculations.Hist(data['machine'])
             return Response(ret)
         return Response(request.data)

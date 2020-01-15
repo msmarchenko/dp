@@ -13,11 +13,19 @@
                           </b-form-checkbox-group>
                       </b-form-group> -->
                       <b-form-group id="input-group-2" class="col-3 offset-4" >
-                          <calendar 
+                          <calendar
                           v-model="form.date"
                           :range="true"
                           :lang="'rus'"
                          />
+                      </b-form-group>
+                      <b-form-group id="input-group-5" label="Завод" label-for="input-5" class="mt-3 col-10 offset-1" style="border-top: 1px solid #ccc;">
+                          <b-form-select
+                          id="input-6"
+                          v-model="form.machine"
+                          :options="machine"
+                          required
+                          ></b-form-select>
                       </b-form-group>
                       <b-form-group id="input-group-3" label="Выбор параметров" style="border-top: 1px solid #ccc;">
                         <div v-if="params.Control.length > 0">
@@ -26,7 +34,7 @@
                               <b-col cols="6">
                                 Тех. Параметры
                               </b-col>
-                              <b-col cols="6">                                
+                              <b-col cols="6">
                                 Показатель качества
                               </b-col>
                             </b-row>
@@ -39,7 +47,7 @@
                                     <b-button variant="primary" @click="addAll('Control')">add all</b-button>
                                     <b-button variant="danger" @click="empty('Control')">add all</b-button>
                                   </div>
-                                  
+
                               </b-col>
                               <b-col cols="4" offset="2" >
                                   <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
@@ -63,7 +71,7 @@
                           ></b-form-select>
                       </b-form-group>
 
-                     
+
                     <b-button type="submit" variant="primary">Submit</b-button>
                     <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
                     </b-form>
@@ -82,7 +90,7 @@
 <script>
   import axios from 'axios';
   import calendar from 'vue-datepicker-ui'
-  export default {  
+  export default {
     components: {
       calendar,
     },
@@ -97,23 +105,28 @@
           params: {
             Control:[],
             Quality: []
-          }
+          },
+          machine: [],
         },
         params: {
           Control:[],
           Quality: []
         },
+
         algos: ['Linear Reg', 'Random Forest', 'Hist'],
+        machine: [],
         show: true
       }
     },
     created: function(){
       this.getParams();
+      this.getMachine();
     },
     methods: {
       empty(type){
         var app = this;
           app.form.params[type] = [];
+          app.form.machine = []
       },
       addAll(type){
         var app = this;
@@ -126,7 +139,7 @@
       },
       onSubmit(evt) {
         evt.preventDefault()
-        // eslint-disable-next-line         
+        // eslint-disable-next-line
         var app = this;
         axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
         .then(resp=>{
@@ -154,10 +167,30 @@
           console.warn(error);
         })
       },
+      getMachine(){
+        var app = this;
+        axios.get("http://127.0.0.1:8000/api/machine/")
+        .then(resp=>{
+          app.fillMachine(resp['data']);
+        })
+        .catch(error=>{
+          // eslint-disable-next-line
+          console.warn(error);
+        })
+      },
       fillParams(sources){
         var app = this;
         sources.forEach(element => {
           app.params[element.position].push(element);
+        })
+        this.$nextTick(() => {
+          this.show = true
+        })
+      },
+      fillMachine(sources){
+        var app = this;
+        sources.forEach(element => {
+          app.machine.push({text:element.name, value:element.id});
         })
         this.$nextTick(() => {
           this.show = true

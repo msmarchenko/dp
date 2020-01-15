@@ -38,6 +38,17 @@ class Order(models.Model):
     def __str__(self):
         return f"Name: {self.name}"
 
+class KPI(models.Model):
+    date = models.DateTimeField(auto_now_add=False)
+    werk =  models.ForeignKey(Machine, on_delete=models.CASCADE)
+    kd_name = models.CharField(max_length=80, default='None')
+    rezeptur = models.CharField(max_length=80)
+    material = models.CharField(max_length=80)
+    polymer  = models.CharField(max_length=20)
+    dicke  = models.FloatField()
+    menge  = models.FloatField()
+    yields  = models.FloatField()
+
 class Measurements(models.Model):
     date = models.DateTimeField(auto_now_add=False)
     rollenNumber = models.IntegerField()
