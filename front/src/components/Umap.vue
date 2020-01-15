@@ -7,8 +7,11 @@
                         <b-card border-variant="info" header="Параметры" align="center">
                             <b-card-text>
                                 <p>
-                                   Технические Параметр: ExtB_Ist_Massedruck                                  
+                                   Параметры которые влияют на показатель качества:                           
                                 </p>
+                                <ul>
+                                    <li v-for='val in dataShow.top_parametr_lasso'>{{val}}</li>
+                                </ul>
                                 <p>
                                     Показатель качества: Stippe_-3000                                 
                                 </p>
@@ -16,7 +19,7 @@
                             </b-card-text>
                         </b-card>
                     </b-card-group>
-                    <b-card-group deck class="mt-5">                        
+                    <!-- <b-card-group deck class="mt-5">                        
                         <b-card border-variant="info" header="Информация" align="center">
                             <b-card-text>
                                 <p>
@@ -35,7 +38,7 @@
                             </b-card-text>
                         </b-card>
                         
-                    </b-card-group>
+                    </b-card-group> -->
                 </b-col>
                 <b-col cols="8">
                     <h2>Графический результат</h2>
@@ -44,7 +47,7 @@
                 
             </b-row>
             <b-col cols="8" offset="4">
-                <apexchart type=line  :options="chart2.chartOptions" :series="chart2.series" />
+                <!-- <apexchart type=line  :options="chart2.chartOptions" :series="chart2.series" /> -->
             </b-col>
         </b-container>
       

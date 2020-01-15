@@ -82,16 +82,19 @@ class Calculations:
         top_param_lasso = pd.DataFrame([df_control.columns, lasso.coef_]).T
         top_param_lasso.columns = ['param', 'coef']
         top_param_lasso =  top_param_lasso[top_param_lasso['coef'] > 0 ]
-
+        print(top_param_lasso)
         df_select_lasso = df_control[top_param_lasso['param']]
 
         returns['top_parametr_lasso'] = df_select_lasso.columns
         df_stippe = pd.DataFrame(df_stippe)
 
-        filename = 'this_afterLasso_umap.sav'
+        # filename = 'this_afterLasso_umap.sav'
         # embedding_lasso = joblib.load(filename)
         # embedding_lasso = fit.transform(df_select_lasso)
-        print(df_select_lasso.head())
+        # print(df_select_lasso.head())
+
+        # fit = umap.UMAP(n_neighbors=50, min_dist = 0.99, random_state=42)
+        # embedding_lasso = fit.fit_transform(df_select_lasso)
         # ret = pd.DataFrame(data=embedding_lasso, columns=['x', 'y'])
         # ret['color']=color
         # returns['lasso_umap']['black']['x'] = ret[ret['color']=='black']['x']
