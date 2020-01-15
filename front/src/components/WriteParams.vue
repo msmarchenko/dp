@@ -19,6 +19,14 @@
                           :lang="'rus'"
                          />
                       </b-form-group>
+                      <b-form-group id="input-group-5" label="Завод" label-for="input-5" class="mt-3 col-10 offset-1" style="border-top: 1px solid #ccc;">
+                          <b-form-select
+                          id="input-6"
+                          v-model="form.machine"
+                          :options="machine"
+                          required
+                          ></b-form-select>
+                      </b-form-group>
                       <b-form-group id="input-group-3" label="Выбор параметров" style="border-top: 1px solid #ccc;">
                         <div v-if="params.Control.length > 0">
                           <b-container>
@@ -97,23 +105,27 @@
           params: {
             Control:[],
             Quality: []
-          }
+          },
+          machine: []
         },
         params: {
           Control:[],
           Quality: []
         },
+        machine: [],
         algos: ['Linear Reg', 'Random Forest', 'Hist'],
         show: true
       }
     },
     created: function(){
       this.getParams();
+      this.getMachine();
     },
     methods: {
       empty(type){
         var app = this;
           app.form.params[type] = [];
+          app.form.machine = []
       },
       addAll(type){
         var app = this;
@@ -154,10 +166,30 @@
           console.warn(error);
         })
       },
+      getMachine(){
+        var app = this;
+        axios.get("http://127.0.0.1:8000/api/machine/")
+        .then(resp=>{
+          app.fillMachine(resp['data']);
+        })
+        .catch(error=>{
+          // eslint-disable-next-line
+          console.warn(error);
+        })
+      },
       fillParams(sources){
         var app = this;
         sources.forEach(element => {
           app.params[element.position].push(element);
+        })
+        this.$nextTick(() => {
+          this.show = true
+        })
+      },
+      fillMachine(sources){
+        var app = this;
+        sources.forEach(element => {
+          app.machine.push(element);
         })
         this.$nextTick(() => {
           this.show = true
