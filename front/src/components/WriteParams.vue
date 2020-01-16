@@ -45,7 +45,7 @@
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Control')">add all</b-button>
-                                    <b-button variant="danger" @click="empty('Control')">add all</b-button>
+                                    <b-button variant="danger" @click="empty('Control')">delete all</b-button>
                                   </div>
 
                               </b-col>
@@ -55,7 +55,7 @@
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Quality')">add all</b-button>
-                                    <b-button variant="danger" @click="empty('Quality')">add all</b-button>
+                                    <b-button variant="danger" @click="empty('Quality')">delete all</b-button>
                                   </div>
                               </b-col>
                             </b-row>
