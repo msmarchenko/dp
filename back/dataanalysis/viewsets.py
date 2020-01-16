@@ -45,13 +45,13 @@ class CalculateViewset(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def calc(self, request):
         data = request.data
-        if data['algos'] == 'Linear Reg':
-            ret = Calculations.LinearReg(data['params'])
+        if data['algos'] == 'Umap':
+            ret = Calculations.CalcUmap(data['params'])
             return Response(ret)
         if data['algos'] == "Random Forest":
             ret = Calculations.LinearReg(data['params'])
             return Response(ret)
         if data['algos'] == "Hist":
-            ret = Calculations.Hist(data['params'])
+            ret = Calculations.Hist(data['machine'])
             return Response(ret)
         return Response(request.data)

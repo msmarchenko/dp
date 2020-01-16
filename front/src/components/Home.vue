@@ -61,6 +61,8 @@ export default {
                 this.componentsChart = () => import('./ForestChart.vue');
             }else if(algos == "Hist"){                
                 this.componentsChart = () => import('./Hist.vue');
+            }else if(algos == "Umap"){                
+                this.componentsChart = () => import('./Umap.vue');
             }else{
                 this.componentsChart = () => import('./Charts.vue');
             }
