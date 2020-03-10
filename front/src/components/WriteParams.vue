@@ -72,7 +72,10 @@
                       </b-form-group>
 
 
-                    <b-button type="submit" variant="primary">Рассчитать</b-button>
+                    <b-button type="submit" variant="primary" v-if="!loading">Рассчитать</b-button>
+                    <b-button variant="primary" v-if="loading" disabled>
+                      <b-spinner small type="grow"></b-spinner>Идет расчет...
+                    </b-button>
                     <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
                     </b-form>
                     <!-- <b-card class="mt-3" header="Form Data Result">
@@ -96,6 +99,7 @@
     },
     data() {
       return {
+        loading: false,
         form: {
           date:  [
             new Date(2015,5,16),
@@ -140,18 +144,21 @@
       onSubmit(evt) {
         evt.preventDefault()
         // eslint-disable-next-line
+        this.loading = true;
         var app = this;
         axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('SAVE_TODO', resp.data);
           this.$emit('calc', app.form.algos);
+          app.loading = false;
         })
         .catch(error=>{
           // eslint-disable-next-line
           alert("С данными параметрами расчет не возможен")
           // eslint-disable-next-line
           console.warn(error);
+          app.loading = false;
         })
         // eslint-disable-next-line
         // console.log(JSON.stringify(this.form))
