@@ -44,8 +44,8 @@
                                     <b-form-checkbox v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
-                                    <b-button variant="primary" @click="addAll('Control')">add all</b-button>
-                                    <b-button variant="danger" @click="empty('Control')">delete all</b-button>
+                                    <b-button variant="primary" @click="addAll('Control')">Добавить все</b-button>
+                                    <b-button variant="danger" @click="empty('Control')">Удалить все</b-button>
                                   </div>
 
                               </b-col>
@@ -54,8 +54,8 @@
                                     <b-form-checkbox v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
-                                    <b-button variant="primary" @click="addAll('Quality')">add all</b-button>
-                                    <b-button variant="danger" @click="empty('Quality')">delete all</b-button>
+                                    <b-button variant="primary" @click="addAll('Quality')">Добавить все</b-button>
+                                    <b-button variant="danger" @click="empty('Quality')">Удалить все</b-button>
                                   </div>
                               </b-col>
                             </b-row>
@@ -72,7 +72,7 @@
                       </b-form-group>
 
 
-                    <b-button type="submit" variant="primary">Submit</b-button>
+                    <b-button type="submit" variant="primary">Рассчитать</b-button>
                     <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
                     </b-form>
                     <!-- <b-card class="mt-3" header="Form Data Result">
