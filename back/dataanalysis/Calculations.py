@@ -13,7 +13,7 @@ import pandas as pd
 from .models import Measurements
 from .serializers import MeasurementsSerializer
 
-
+import json
 
 
 
@@ -23,7 +23,9 @@ class Calculations:
         pass
     
     def CalcUmap(params):
-
+        print(params)
+        print(float(params.get("treshold", 0)))
+        # params = json.loads(params)
         nRowsRead = 1000 
         df1 = pd.read_csv('Control.csv', delimiter=',', nrows=nRowsRead)
         df2 = pd.read_csv('Quality.csv', delimiter='\t', nrows=nRowsRead)
@@ -35,9 +37,9 @@ class Calculations:
         nRow, nCol = df1.shape
 
         print(df1.columns)
-        print(f'There are {nRow} rows and {nCol} columns')
+        # print(f'There are {nRow} rows and {nCol} columns')
         nRow, nCol = df2.shape
-        print(f'There are {nRow} rows and {nCol} columns')
+        # print(f'There are {nRow} rows and {nCol} columns')
         df_quality = df2
         df_control = df1
         df_quality = df_quality.drop(['Unnamed: 0'], axis=1)
@@ -46,6 +48,10 @@ class Calculations:
         arr_quality = df_quality.set_index('date')
         stp_str = 'Stippe_-3000'
         treshold = 47.5
+        if "treshold" in params and float(params.get("treshold")) > 0:
+            treshold = float(params.get("treshold"))
+
+
         df_stippe = df_quality[stp_str]
         df_quality[df_quality[stp_str] > treshold][stp_str]
         color = np.where(df_quality[stp_str] > treshold ,'red','black')
@@ -54,7 +60,13 @@ class Calculations:
         df_quality = pd.DataFrame(arr_quality, columns=df_quality.columns, index= df_quality.index)
         df_control = df_control.fillna(0)
         df_stippe = df_stippe.fillna(0)
-        lasso = linear_model.Lasso(alpha=2, tol=0.2)
+
+
+        alphaP = 2
+        if "alpha" in params and float(params.get("alpha")) > 0:
+            alphaP = float(params.get("alpha"))
+
+        lasso = linear_model.Lasso(alpha=alphaP, tol=0.2)
         lasso.fit(df_control, df_stippe)
         top_param_lasso = pd.DataFrame([df_control.columns, lasso.coef_]).T
         top_param_lasso.columns = ['param', 'coef']
@@ -63,8 +75,17 @@ class Calculations:
         # top_param_lasso.head()
 
         df_select_lasso = df_control[top_param_lasso['param']]
-        print(df_control.columns)
-        fit = umap.UMAP(n_neighbors=100, min_dist=0.05, metric='euclidean', random_state=42)
+        # print(df_control.columns)
+
+        n_neighborsP = 100
+        if "n_neighbors" in params and float(params.get("n_neighbors")) > 0:
+            alphaP = float(params.get("n_neighbors"))
+
+        min_distP = 0.05
+        if "min_dist" in params and float(params.get("min_dist")) > 0:
+            min_distP = float(params.get("min_dist"))
+
+        fit = umap.UMAP(n_neighbors=n_neighborsP, min_dist=min_distP, metric='euclidean', random_state=42)
         embedding = fit.fit_transform(df_select_lasso)
         # print(embedding[:1])
         ret = pd.DataFrame(data=embedding, columns=['x', 'y'])
@@ -80,8 +101,9 @@ class Calculations:
                     'x': ret[ret['color']=='red']['x'],
                     'y': ret[ret['color']=='red']['y'],
                 }
-            }
+            },            
         }
+        # returns['params'] = {}
 
         # df_stippe = df_quality[stp_str]
         # df_control = df_control.fillna(0)
@@ -114,7 +136,7 @@ class Calculations:
 
 
 
-    def Hist(params):
+    def Hist(self, params):
 
         machine = Machine.objects.get(pk=params)
         objects = KPI.objects.all().filter(werk=machine).filter(yields__lte=100)
@@ -162,7 +184,7 @@ class Calculations:
         }
         return ret
 
-    def LinearReg(params):
+    def LinearReg(self,params):
         #Сделал так потому что некогда разбираться как работают джанговские модели
         conn = sqlite3.connect('db.sqlite3')
         query = "SELECT * FROM dataanalysis_measurements where parameter_id=%s or parameter_id =%s"%(params['Control'][0], params['Quality'][0])
