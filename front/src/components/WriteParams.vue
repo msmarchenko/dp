@@ -40,22 +40,22 @@
                             </b-row>
                             <b-row >
                               <b-col cols="4" offset="1">
-                                  <b-form-checkbox-group v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+                                  <b-form-checkbox-group  v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
+                                    <b-form-checkbox :style="'float: left;'" v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Control')">Добавить все</b-button>
-                                    <b-button variant="danger" @click="empty('Control')">Удалить все</b-button>
+                                    <b-button variant="danger ml-5" @click="empty('Control')">Удалить все</b-button>
                                   </div>
 
                               </b-col>
                               <b-col cols="4" offset="2" >
-                                  <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+                                  <b-form-checkbox-group  v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
+                                    <b-form-checkbox  :style="'float: left;'" v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Quality')">Добавить все</b-button>
-                                    <b-button variant="danger" @click="empty('Quality')">Удалить все</b-button>
+                                    <b-button variant="danger ml-5" @click="empty('Quality')">Удалить все</b-button>
                                   </div>
                               </b-col>
                             </b-row>

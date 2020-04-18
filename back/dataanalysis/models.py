@@ -42,13 +42,14 @@ class Composition(models.Model):
 
 class Parameter(models.Model):
     class Meta:
-        unique_together = (('name', 'definitionid'),)
+        unique_together = (('name'),)        
+    readonly_fields = ('definitionid',) 
     TYPE_CHOICES = (
         ('Control', 'Control'),
         ('Quality', 'Quality'),
     )
     name = models.CharField(max_length=50)
-    definitionid = models.IntegerField()
+    definitionid = models.IntegerField(blank=True, null=True)
     position = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Quality')
     def __str__(self):
         return f"Name: {self.name}"
