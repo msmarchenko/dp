@@ -50,13 +50,14 @@ export default {
           "email":this.email.value,
           "password": this.password
       };
+      this.$emit('auth', true);
       // eslint-disable-next-line
         var app = this;
         axios.post("http://83.220.169.215:8383/auth-jwt/",form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('AUTH', resp.data.token);
-          this.$emit('auth', true);
+          
         })
         .catch(error=>{
           // eslint-disable-next-line
