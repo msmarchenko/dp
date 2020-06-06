@@ -14,8 +14,8 @@ from .models import Measurements, Cnn_Model
 from .serializers import MeasurementsSerializer
 
 import json
-from keras.models import load_model
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
+# from keras.models import load_model
+# from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 
 class Calculations:
@@ -165,54 +165,54 @@ class Calculations:
         
         return returns
 
-    def CalcCNN(params):
-        print(params)
-        nRowsRead = 1000 
-        df1 = pd.read_csv('Control.csv', delimiter=',', nrows=nRowsRead)
-        df2 = pd.read_csv('Quality.csv', delimiter='\t', nrows=nRowsRead)
-        df1.dataframeName = 'Control.csv' 
-        df2.dataframeName = 'Quality.csv'
-        df_control = df1
-        df_quality = df2
-        df_control = df_control.drop('Unnamed: 0', axis=1).set_index('date')
-        df_quality = df_quality.drop('Unnamed: 0', axis=1).set_index('date')
-        time = df_quality.index
-        df_control.drop([col for col in df1.columns if col.startswith('Wickler')],
-                 axis=1, inplace=True)
-        df_quality['Stippe_-3000'] = df_quality['Stippe_-3000'].fillna(df_quality['Stippe_-3000'].median())
-        # treshold = 47.5
-        y = df_quality['Stippe_-3000'] > params.get("treshold", 47.5)
-        print(params.get("treshold", 47.5))
-        X = df_control
-        y = pd.DataFrame(y)
-        y['Stippe_-3000'] = y['Stippe_-3000'].astype(float)
-        sc = StandardScaler()
-        X = sc.fit_transform(X)
-        X_df_scaller = pd.DataFrame(X, columns=df_control.columns, index=df_control.index)
-        X_df_scaller = X_df_scaller.merge(y, left_index=True, right_index=True, how='outer')
-        X = X_df_scaller.values
-        n_steps = 4
-        X, y = Calculations.split_sequences(X, n_steps)
-        # model = load_model('cnn.h5', compile=False)
-        yhat_02 = Cnn_Model.predict(X)
-        # yhat_02 = model.predict(X)
-        predicts02 = yhat_02[:,0]
-        predicts02 = predicts02 > 0.99
-        predicts02 = predicts02.astype(int)
-        y = y.astype(int)   
-        print(y, predicts02)
-        fpr, tpr, threshold = roc_curve(predicts02, y)
-        roc_auc = auc(fpr, tpr)
+    # def CalcCNN(params):
+    #     print(params)
+    #     nRowsRead = 1000 
+    #     df1 = pd.read_csv('Control.csv', delimiter=',', nrows=nRowsRead)
+    #     df2 = pd.read_csv('Quality.csv', delimiter='\t', nrows=nRowsRead)
+    #     df1.dataframeName = 'Control.csv' 
+    #     df2.dataframeName = 'Quality.csv'
+    #     df_control = df1
+    #     df_quality = df2
+    #     df_control = df_control.drop('Unnamed: 0', axis=1).set_index('date')
+    #     df_quality = df_quality.drop('Unnamed: 0', axis=1).set_index('date')
+    #     time = df_quality.index
+    #     df_control.drop([col for col in df1.columns if col.startswith('Wickler')],
+    #              axis=1, inplace=True)
+    #     df_quality['Stippe_-3000'] = df_quality['Stippe_-3000'].fillna(df_quality['Stippe_-3000'].median())
+    #     # treshold = 47.5
+    #     y = df_quality['Stippe_-3000'] > params.get("treshold", 47.5)
+    #     print(params.get("treshold", 47.5))
+    #     X = df_control
+    #     y = pd.DataFrame(y)
+    #     y['Stippe_-3000'] = y['Stippe_-3000'].astype(float)
+    #     sc = StandardScaler()
+    #     X = sc.fit_transform(X)
+    #     X_df_scaller = pd.DataFrame(X, columns=df_control.columns, index=df_control.index)
+    #     X_df_scaller = X_df_scaller.merge(y, left_index=True, right_index=True, how='outer')
+    #     X = X_df_scaller.values
+    #     n_steps = 4
+    #     X, y = Calculations.split_sequences(X, n_steps)
+    #     # model = load_model('cnn.h5', compile=False)
+    #     yhat_02 = Cnn_Model.predict(X)
+    #     # yhat_02 = model.predict(X)
+    #     predicts02 = yhat_02[:,0]
+    #     predicts02 = predicts02 > 0.99
+    #     predicts02 = predicts02.astype(int)
+    #     y = y.astype(int)   
+    #     print(y, predicts02)
+    #     fpr, tpr, threshold = roc_curve(predicts02, y)
+    #     roc_auc = auc(fpr, tpr)
         
-        returns = {
-            'cnn': { 
-                "false_positive_rate":fpr.tolist(),
-                "true_postitve_rate":tpr.tolist(),
-                "roc_auc":roc_auc.tolist(),
-                "errors": Calculations.perf_measure(predicts02, y)
-            },            
-        }
-        return returns
+    #     returns = {
+    #         'cnn': { 
+    #             "false_positive_rate":fpr.tolist(),
+    #             "true_postitve_rate":tpr.tolist(),
+    #             "roc_auc":roc_auc.tolist(),
+    #             "errors": Calculations.perf_measure(predicts02, y)
+    #         },            
+    #     }
+    #     return returns
 
     
 
