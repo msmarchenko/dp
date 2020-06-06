@@ -351,7 +351,7 @@ export default {
       };
       var app = this;
       axios
-        .post("http://127.0.0.1:8000/api/calc/calc/", request)
+        .post("http://83.220.169.215:8383/api/calc/calc/", request)
         .then(resp => {
           this.$store.dispatch("SAVE_TODO", resp.data);
           this.$emit("calc", "Umap");

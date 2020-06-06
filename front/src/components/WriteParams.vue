@@ -146,7 +146,7 @@
         // eslint-disable-next-line
         this.loading = true;
         var app = this;
-        axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
+        axios.post("http://83.220.169.215:8383/api/calc/calc/",this.form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('SAVE_TODO', resp.data);
@@ -165,7 +165,7 @@
       },
       getParams(){
         var app = this;
-        axios.get("http://127.0.0.1:8000/api/parameter/")
+        axios.get("http://83.220.169.215:8383/api/parameter/")
         .then(resp=>{
           app.fillParams(resp['data']);
         })
@@ -176,7 +176,7 @@
       },
       getMachine(){
         var app = this;
-        axios.get("http://127.0.0.1:8000/api/machine/")
+        axios.get("http://83.220.169.215:8383/api/machine/")
         .then(resp=>{
           app.fillMachine(resp['data']);
         })
