@@ -40,22 +40,32 @@
                             </b-row>
                             <b-row >
                               <b-col cols="4" offset="1">
-                                  <b-form-checkbox-group v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
+<<<<<<< HEAD
+                                  <b-form-checkbox-group v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;text-align: left;">
                                     <b-form-checkbox v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+=======
+                                  <b-form-checkbox-group  v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
+                                    <b-form-checkbox :style="'float: left;'" v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+>>>>>>> dd15a05429e39135a3fa118e4c82aaa90dd0bae1
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
-                                    <b-button variant="primary" @click="addAll('Control')">add all</b-button>
-                                    <b-button variant="danger" @click="empty('Control')">delete all</b-button>
+                                    <b-button variant="primary" @click="addAll('Control')">Добавить все</b-button>
+                                    <b-button variant="danger ml-5" @click="empty('Control')">Удалить все</b-button>
                                   </div>
 
                               </b-col>
                               <b-col cols="4" offset="2" >
-                                  <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
+<<<<<<< HEAD
+                                  <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;text-align: left;">
                                     <b-form-checkbox v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+=======
+                                  <b-form-checkbox-group  v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
+                                    <b-form-checkbox  :style="'float: left;'" v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+>>>>>>> dd15a05429e39135a3fa118e4c82aaa90dd0bae1
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
-                                    <b-button variant="primary" @click="addAll('Quality')">add all</b-button>
-                                    <b-button variant="danger" @click="empty('Quality')">delete all</b-button>
+                                    <b-button variant="primary" @click="addAll('Quality')">Добавить все</b-button>
+                                    <b-button variant="danger ml-5" @click="empty('Quality')">Удалить все</b-button>
                                   </div>
                               </b-col>
                             </b-row>
@@ -72,7 +82,10 @@
                       </b-form-group>
 
 
-                    <b-button type="submit" variant="primary">Submit</b-button>
+                    <b-button type="submit" variant="primary" v-if="!loading">Рассчитать</b-button>
+                    <b-button variant="primary" v-if="loading" disabled>
+                      <b-spinner small type="grow"></b-spinner>Идет расчет...
+                    </b-button>
                     <!-- <b-button type="reset" variant="danger">Reset</b-button> -->
                     </b-form>
                     <!-- <b-card class="mt-3" header="Form Data Result">
@@ -96,6 +109,7 @@
     },
     data() {
       return {
+        loading: false,
         form: {
           date:  [
             new Date(2015,5,16),
@@ -113,7 +127,7 @@
           Quality: []
         },
 
-        algos: ['Umap', 'Random Forest', 'Hist'],
+        algos: ['Umap', 'CNN', 'Random Forest', 'Hist'],
         machine: [],
         show: true
       }
@@ -140,18 +154,21 @@
       onSubmit(evt) {
         evt.preventDefault()
         // eslint-disable-next-line
+        this.loading = true;
         var app = this;
         axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('SAVE_TODO', resp.data);
           this.$emit('calc', app.form.algos);
+          app.loading = false;
         })
         .catch(error=>{
           // eslint-disable-next-line
           alert("С данными параметрами расчет не возможен")
           // eslint-disable-next-line
           console.warn(error);
+          app.loading = false;
         })
         // eslint-disable-next-line
         // console.log(JSON.stringify(this.form))

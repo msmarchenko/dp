@@ -1,6 +1,35 @@
 from django.db import models
-
+from django.utils import timezone
+from django.contrib.auth.models import (
+    AbstractBaseUser, PermissionsMixin
+)
+from .UserManager import UserManager
 # Create your models here.
+from keras.models import load_model
+
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    """
+    An abstract base class implementing a fully featured User model with
+    admin-compliant permissions.
+ 
+    """
+    email = models.EmailField(max_length=40, unique=True)
+    first_name = models.CharField(max_length=30, blank=True)
+    last_name = models.CharField(max_length=30, blank=True)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now)
+ 
+    objects = UserManager()
+ 
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['first_name', 'last_name']
+ 
+    def save(self, *args, **kwargs):
+        super(User, self).save(*args, **kwargs)
+        return self
 
 
 class Composition(models.Model):
@@ -10,17 +39,23 @@ class Composition(models.Model):
         return f"Name: {self.name}"
 
 
-
+class Cnn_Model(models.Model):
+    # def getModel():
+    #     return 
+    def predict (X):
+        model  = load_model('cnn.h5', compile=False)
+        return model.predict(X)
 
 class Parameter(models.Model):
     class Meta:
-        unique_together = (('name', 'definitionid'),)
+        unique_together = (('name'),)        
+    readonly_fields = ('definitionid',) 
     TYPE_CHOICES = (
         ('Control', 'Control'),
         ('Quality', 'Quality'),
     )
     name = models.CharField(max_length=50)
-    definitionid = models.IntegerField()
+    definitionid = models.IntegerField(blank=True, null=True)
     position = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Quality')
     def __str__(self):
         return f"Name: {self.name}"
