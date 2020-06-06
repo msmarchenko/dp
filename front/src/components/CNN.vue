@@ -52,7 +52,6 @@ export default {
       roc_auc: 0.0,
       mean_squared_error: 0.0,
       variance_score: 0.0,
-      dataShow: null,
       TP: 0,
       FP: 0,
       TN: 0,
@@ -241,6 +240,7 @@ export default {
         var app = this;
         // eslint-disable-next-line
         var black = [];
+        // eslint-disable-next-line
         var category = [];
         // Object.values(this.dataShow.cnn.x).map(function(value,key) {
         //   // eslint-disable-next-line

@@ -79,7 +79,7 @@
               <b-card-text>
                 <p>Параметры которые влияют на показатель качества:</p>
                 <ul>
-                  <li v-for="val in dataShow.top_parametr_lasso">{{val}}</li>
+                  <li v-for="(val, key) in dataShow.top_parametr_lasso" v-bind:key="key" >{{val}}</li>
                 </ul>
                 <!-- <p>
                                     Показатель качества: Stippe_-3000                                 
