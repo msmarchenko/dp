@@ -48,6 +48,9 @@ class CalculateViewset(viewsets.ViewSet):
         if data['algos'] == 'Umap':
             ret = Calculations.CalcUmap(data['params'])
             return Response(ret)
+        if data['algos'] == 'CNN':
+            ret = Calculations.CalcCNN(data['params'])
+            return Response(ret)
         if data['algos'] == "Random Forest":
             ret = Calculations.LinearReg(data['params'])
             return Response(ret)

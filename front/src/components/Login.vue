@@ -3,7 +3,7 @@
     <form class="vue-form" @submit.prevent="submit">
 
     <div class="error-message">
-      <p v-show="!email.valid">Oh, please enter a valid email address.</p>
+      <p v-show="!email.valid">Пожалуста введите корректный Email.</p>
     </div>
 
     <fieldset>
@@ -52,7 +52,7 @@ export default {
       };
       // eslint-disable-next-line
         var app = this;
-        axios.post("http://127.0.0.1:8000/auth-jwt/",form)
+        axios.post("http://83.220.169.215:8383/auth-jwt/",form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('AUTH', resp.data.token);
@@ -60,7 +60,7 @@ export default {
         })
         .catch(error=>{
           // eslint-disable-next-line
-          alert("С данными параметрами расчет не возможен")
+          alert("Неверный логин или пароль")
           // eslint-disable-next-line
           console.warn(error);
         })

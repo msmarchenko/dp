@@ -40,8 +40,8 @@
                             </b-row>
                             <b-row >
                               <b-col cols="4" offset="1">
-                                  <b-form-checkbox-group  v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox :style="'float: left;'" v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+                                  <b-form-checkbox-group v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;text-align: left;">
+                                    <b-form-checkbox v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Control')">Добавить все</b-button>
@@ -50,8 +50,8 @@
 
                               </b-col>
                               <b-col cols="4" offset="2" >
-                                  <b-form-checkbox-group  v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox  :style="'float: left;'" v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
+                                  <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;text-align: left;">
+                                    <b-form-checkbox v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Quality')">Добавить все</b-button>
@@ -117,7 +117,7 @@
           Quality: []
         },
 
-        algos: ['Umap', 'Random Forest', 'Hist'],
+        algos: ['Umap', 'CNN', 'Random Forest', 'Hist'],
         machine: [],
         show: true
       }
@@ -146,7 +146,7 @@
         // eslint-disable-next-line
         this.loading = true;
         var app = this;
-        axios.post("http://127.0.0.1:8000/api/calc/calc/",this.form)
+        axios.post("http://83.220.169.215:8383/api/calc/calc/",this.form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('SAVE_TODO', resp.data);
@@ -165,7 +165,7 @@
       },
       getParams(){
         var app = this;
-        axios.get("http://127.0.0.1:8000/api/parameter/")
+        axios.get("http://83.220.169.215:8383/api/parameter/")
         .then(resp=>{
           app.fillParams(resp['data']);
         })
@@ -176,7 +176,7 @@
       },
       getMachine(){
         var app = this;
-        axios.get("http://127.0.0.1:8000/api/machine/")
+        axios.get("http://83.220.169.215:8383/api/machine/")
         .then(resp=>{
           app.fillMachine(resp['data']);
         })

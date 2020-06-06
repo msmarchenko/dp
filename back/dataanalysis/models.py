@@ -5,7 +5,7 @@ from django.contrib.auth.models import (
 )
 from .UserManager import UserManager
 # Create your models here.
-
+from keras.models import load_model
 
 
 
@@ -39,6 +39,12 @@ class Composition(models.Model):
         return f"Name: {self.name}"
 
 
+class Cnn_Model(models.Model):
+    # def getModel():
+    #     return 
+    def predict (X):
+        model  = load_model('cnn.h5', compile=False)
+        return model.predict(X)
 
 class Parameter(models.Model):
     class Meta:

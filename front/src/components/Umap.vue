@@ -79,7 +79,7 @@
               <b-card-text>
                 <p>Параметры которые влияют на показатель качества:</p>
                 <ul>
-                  <li v-for="val in dataShow.top_parametr_lasso">{{val}}</li>
+                  <li v-for="(val, key) in dataShow.top_parametr_lasso" v-bind:key="key" >{{val}}</li>
                 </ul>
                 <!-- <p>
                                     Показатель качества: Stippe_-3000                                 
@@ -322,7 +322,7 @@ export default {
 
           yaxis: {
             min: 0,
-            max: 1.03,
+            max: 1.0,
             title: {
               text: "True Positive Rate"
             }
@@ -351,7 +351,7 @@ export default {
       };
       var app = this;
       axios
-        .post("http://127.0.0.1:8000/api/calc/calc/", request)
+        .post("http://83.220.169.215:8383/api/calc/calc/", request)
         .then(resp => {
           this.$store.dispatch("SAVE_TODO", resp.data);
           this.$emit("calc", "Umap");
