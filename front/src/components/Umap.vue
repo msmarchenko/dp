@@ -234,6 +234,28 @@ export default {
           legend: {
             show: true,
             horizontalAlign: "center"
+          },
+          xaxis: {
+              title: {
+                text: "z1 = f(x1,...xn)"
+              },
+              tickAmount: 10,
+              labels: {
+                formatter: function(val) {
+                  return parseFloat(val).toFixed(3)
+                }
+              }
+          },
+          yaxis: {
+            title: {
+                text: "z2= f(x1,....xn)"
+            },
+            tickAmount: 10,
+            labels: {
+              formatter: function(val) {
+                return parseFloat(val).toFixed(0)
+              }
+            }
           }
         }
       },
