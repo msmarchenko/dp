@@ -300,7 +300,7 @@ export default {
 
           yaxis: {
             min: 0,
-            max: 1.03,
+            max: 1.0,
             title: {
               text: "True Positive Rate"
             }

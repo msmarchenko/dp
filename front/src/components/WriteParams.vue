@@ -45,7 +45,7 @@
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Control')">Добавить все</b-button>
-                                    <b-button variant="danger" @click="empty('Control')">Удалить все</b-button>
+                                    <b-button variant="danger ml-5" @click="empty('Control')">Удалить все</b-button>
                                   </div>
 
                               </b-col>
@@ -55,7 +55,7 @@
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Quality')">Добавить все</b-button>
-                                    <b-button variant="danger" @click="empty('Quality')">Удалить все</b-button>
+                                    <b-button variant="danger ml-5" @click="empty('Quality')">Удалить все</b-button>
                                   </div>
                               </b-col>
                             </b-row>
@@ -117,7 +117,7 @@
           Quality: []
         },
 
-        algos: ['Umap', 'Random Forest', 'Hist'],
+        algos: ['Umap', 'CNN', 'Random Forest', 'Hist'],
         machine: [],
         show: true
       }

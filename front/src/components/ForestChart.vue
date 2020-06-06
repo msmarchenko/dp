@@ -76,17 +76,14 @@ export default {
             var app = this;
             Object.values(this.dataShow.y_test).map(function(value, key) {
                 // eslint-disable-next-line 
-                
                 app.chart1.series[1].data.push([new Date(app.dataShow.date[key]),  value[0]])
             });
             Object.values(this.dataShow.y_pred).map(function(value, key) {
-                // eslint-disable-next-line 
-                // console.log([value[0], app.dataShow.y_test[key][0]])    
+                // eslint-disable-next-line
                 app.chart1.series[0].data.push([new Date(app.dataShow.date[key]), value[0]])
             });
-            Object.values(this.dataShow.false_positive_rate).map(function(value, key) {
-                // eslint-disable-next-line 
-                // console.log([value[0], app.dataShow.y_test[key][0]])    
+            Object.values(this.dataShow.cnn.true_postitve_rate).map(function(value, key) {
+                // eslint-disable-next-line  
                 app.chart2.series[0].data.push({x:value, y:app.dataShow.true_postitve_rate[key]})
             });
         }   
@@ -100,7 +97,6 @@ export default {
             variance_score: 0.0,
             chart1: 
             {
-                
                 series: [
                     {
                         name: 'predicts',
@@ -182,7 +178,6 @@ export default {
                                     y: 11
                                 }]
                     },  
-                    
                 ],
                 
                 chartOptions: {

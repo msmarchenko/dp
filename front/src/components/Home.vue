@@ -63,6 +63,8 @@ export default {
                 this.componentsChart = () => import('./Hist.vue');
             }else if(algos == "Umap"){                
                 this.componentsChart = () => import('./Umap.vue');
+            }else if(algos == "CNN"){                
+                this.componentsChart = () => import('./CNN.vue');
             }else{
                 this.componentsChart = () => import('./Charts.vue');
             }
