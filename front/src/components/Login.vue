@@ -53,7 +53,7 @@ export default {
       this.$emit('auth', true);
       // eslint-disable-next-line
         var app = this;
-        axios.post("http://83.220.169.215:8383/auth-jwt/",form)
+        axios.post(`http://${window.location.hostname}:8383/auth-jwt/`,form)
         .then(resp=>{
           // eslint-disable-next-line
           this.$store.dispatch('AUTH', resp.data.token);
