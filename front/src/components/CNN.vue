@@ -17,12 +17,12 @@
       </b-card-group>
       <b-col cols="8">
         <h2>Графический результат</h2>
-        <!-- <apexchart
+        <apexchart
           v-if="!loading"
           type="line"
           :options="chart1.chartOptions"
           :series="chart1.series"
-        /> -->
+        />
         <apexchart type=line  :options="chart2.chartOptions" :series="chart2.series" />
       </b-col>
     </b-row>
@@ -38,10 +38,11 @@ export default {
     apexchart: VueApexCharts
   },
   created() {
-    let txt =
-      '{"cnn":{"false_positive_rate":[0.0,0.1694915254237288,1.0],"true_postitve_rate":[0.0,0.7410714285714286,1.0],"roc_auc":0.7857899515738499,"errors":[83,150,735,29]}}';
+    // let txt =
+    //   '{"cnn":{"false_positive_rate":[0.0,0.1694915254237288,1.0],"true_postitve_rate":[0.0,0.7410714285714286,1.0],"roc_auc":0.7857899515738499,"errors":[83,150,735,29]}}';
 
-    this.dataShow = JSON.parse(txt);
+    // this.dataShow = JSON.parse(txt);
+    this.dataShow = this.$store.getters.DATASHOW;
     this.render();
   },
   data() {
@@ -83,7 +84,7 @@ export default {
               curve: 'straight'
             },
             title: {
-              text: 'Product Trends by Month',
+              text: 'Отношение экспериментальных данных с спрогнозированными',
               align: 'left'
             },
             grid: {
@@ -93,16 +94,22 @@ export default {
               },
             },
             yaxis:{
-              min: -1,
-              max: 2
+              min: 0,
+              max: 1,
+              title: {
+                  text: "Класс",                            
+              },
             },
             xaxis: {
               //categories: [],
               type: 'datetime',
-              tickAmount: 6,
+              title: {
+                  text: "Время",                            
+              },
+              tickAmount: 10,
               labels: {
                 show: true,
-                rotate: -90,
+                rotate: -45,
                 format: 'HH:mm',
                 datetimeFormatter: {
                     year: 'yyyy',
@@ -242,17 +249,17 @@ export default {
         var black = [];
         // eslint-disable-next-line
         var category = [];
-        // Object.values(this.dataShow.cnn.x).map(function(value,key) {
-        //   // eslint-disable-next-line
-        //   black.push({y:app.dataShow.cnn.y_orig[key], x: new Date(value).getTime()});
-        // });
-        // this.chart1.series[1].data = black;
-        // this.$set(this.chart1.series[1], "data", black);
+        Object.values(this.dataShow.cnn.date).map(function(value,key) {
+          // eslint-disable-next-line
+          black.push({y:app.dataShow.cnn.y_orig[key], x: new Date(app.dataShow.cnn.date[key]).getTime()});
+        });
+        this.chart1.series[1].data = black;
+        this.$set(this.chart1.series[1], "data", black);
 
-        // Object.values(this.dataShow.cnn.x).map(function(value, key) {
-        //   // eslint-disable-next-line
-        //   app.chart1.series[0].data.push({y:app.dataShow.cnn.y_pred[key], x:value});
-        // });
+        Object.values(this.dataShow.cnn.date).map(function(value, key) {
+          // eslint-disable-next-line
+          app.chart1.series[0].data.push({y:app.dataShow.cnn.y_pred[key], x:value});
+        });
         this.roc_auc = this.dataShow.cnn.roc_auc;
 
         this.TP = this.dataShow.cnn.errors[0];

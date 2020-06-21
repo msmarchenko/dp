@@ -197,7 +197,7 @@ class Calculations:
         yhat_02 = Cnn_Model.predict(X)
         # yhat_02 = model.predict(X)
         predicts02 = yhat_02[:,0]
-        predicts02 = predicts02 > 0.99
+        predicts02 = predicts02 > 0.5
         predicts02 = predicts02.astype(int)
         y = y.astype(int)   
         print(y, predicts02)
@@ -209,7 +209,10 @@ class Calculations:
                 "false_positive_rate":fpr.tolist(),
                 "true_postitve_rate":tpr.tolist(),
                 "roc_auc":roc_auc.tolist(),
-                "errors": Calculations.perf_measure(predicts02, y)
+                "errors": Calculations.perf_measure(predicts02, y),
+                "y_pred": predicts02,
+                "y_orig": y,
+                "date": X_df_scaller.index.values
             },            
         }
         return returns

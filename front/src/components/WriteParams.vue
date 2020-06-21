@@ -24,7 +24,6 @@
                           id="input-6"
                           v-model="form.machine"
                           :options="machine"
-                          required
                           ></b-form-select>
                       </b-form-group>
                       <b-form-group id="input-group-3" label="Выбор параметров" style="border-top: 1px solid #ccc;">
