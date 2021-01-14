@@ -48,15 +48,18 @@ class Cnn_Model(models.Model):
 
 class Parameter(models.Model):
     class Meta:
-        unique_together = (('name'),)        
-    readonly_fields = ('definitionid',) 
+        constraints = [
+            models.UniqueConstraint(fields=['definition_id', 'name'], name='definition_id_and_parameter_name_constraint')
+        ]
+    readonly_fields = ('definition_id',)
     TYPE_CHOICES = (
         ('Control', 'Control'),
         ('Quality', 'Quality'),
     )
     name = models.CharField(max_length=50)
-    definitionid = models.IntegerField(blank=True, null=True)
+    definition_id = models.IntegerField(blank=True, null=True)
     position = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Quality')
+
     def __str__(self):
         return f"Name: {self.name}"
 
