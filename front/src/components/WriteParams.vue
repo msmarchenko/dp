@@ -40,13 +40,8 @@
                             </b-row>
                             <b-row >
                               <b-col cols="4" offset="1">
-<<<<<<< HEAD
-                                  <b-form-checkbox-group v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;text-align: left;">
-                                    <b-form-checkbox v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
-=======
                                   <b-form-checkbox-group  v-model="form.params.Control" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox :style="'float: left;'" v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
->>>>>>> dd15a05429e39135a3fa118e4c82aaa90dd0bae1
+                                    <b-form-checkbox :style="'float: left;'" v-for="(value, key) in params.Control" :key="key" :value="value.id">{{value.position}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Control')">Добавить все</b-button>
@@ -55,13 +50,8 @@
 
                               </b-col>
                               <b-col cols="4" offset="2" >
-<<<<<<< HEAD
-                                  <b-form-checkbox-group v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;text-align: left;">
-                                    <b-form-checkbox v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
-=======
                                   <b-form-checkbox-group  v-model="form.params.Quality" id="checkboxes-4" style="border: 1px solid #ccc;height:200px;word-break: break-all; overflow-y: scroll; overflow-x: hidden;">
-                                    <b-form-checkbox  :style="'float: left;'" v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.name}}</b-form-checkbox>
->>>>>>> dd15a05429e39135a3fa118e4c82aaa90dd0bae1
+                                    <b-form-checkbox  :style="'float: left;'" v-for="(value, key) in params.Quality" :key="key" :value="value.id">{{value.position}}</b-form-checkbox>
                                   </b-form-checkbox-group>
                                   <div class="mt-3">
                                     <b-button variant="primary" @click="addAll('Quality')">Добавить все</b-button>
@@ -83,6 +73,7 @@
 
 
                     <b-button type="submit" variant="primary" v-if="!loading">Рассчитать</b-button>
+                    <b-button variant="primary" @click="giveDate()">Дай данные!</b-button>
                     <b-button variant="primary" v-if="loading" disabled>
                       <b-spinner small type="grow"></b-spinner>Идет расчет...
                     </b-button>
@@ -177,6 +168,7 @@
         var app = this;
         axios.get("http://127.0.0.1:8000/api/parameter/")
         .then(resp=>{
+          //console.warn("HAVE DATA!");
           app.fillParams(resp['data']);
         })
         .catch(error=>{
@@ -198,7 +190,9 @@
       fillParams(sources){
         var app = this;
         sources.forEach(element => {
-          app.params[element.position].push(element);
+          //console.log(element)
+          app.params[element.definition_id].push(element);
+          //app.params.push({text:element.position, value:element.id});
         })
         this.$nextTick(() => {
           this.show = true
@@ -207,6 +201,7 @@
       fillMachine(sources){
         var app = this;
         sources.forEach(element => {
+        //console.log(app.machine)
           app.machine.push({text:element.name, value:element.id});
         })
         this.$nextTick(() => {
@@ -225,6 +220,18 @@
         this.$nextTick(() => {
           this.show = true
         })
+      },
+      giveDate(){
+      console.log("Dai dannie!")
+      var app = this;
+      axios.get("http://127.0.0.1:8000/givedate/")
+      .then(resp=>{
+        console.log(resp.data.foo);
+      })
+      .catch(error=>{
+        console.error("hui");
+        console.warn(error);
+      })
       }
     }
   }

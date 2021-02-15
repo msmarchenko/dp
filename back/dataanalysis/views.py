@@ -1,15 +1,20 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.http import JsonResponse
 
+def aboutview(request):
+    return JsonResponse({'foo':'aga, dannie'})
+#  return HttpResponse("<h1>about page</h1>")
 # Create your views here.
 
-@api_view(['POST'])
+'''@api_view(['POST'])
 @permission_classes([AllowAny, ])
 def authenticate_user(request):
- 
+
     try:
         email = request.data['email']
         password = request.data['password']
- 
+
         user = User.objects.get(email=email, password=password)
         if user:
             try:
@@ -22,7 +27,7 @@ def authenticate_user(request):
                 user_logged_in.send(sender=user.__class__,
                                     request=request, user=user)
                 return Response(user_details, status=status.HTTP_200_OK)
- 
+
             except Exception as e:
                 raise e
         else:
@@ -31,4 +36,4 @@ def authenticate_user(request):
             return Response(res, status=status.HTTP_403_FORBIDDEN)
     except KeyError:
         res = {'error': 'please provide a email and a password'}
-        return Response(res)
+        return Response(res)'''

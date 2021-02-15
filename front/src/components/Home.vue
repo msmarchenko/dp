@@ -6,12 +6,12 @@
 
                 <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-                <b-collapse id="nav-collapse" is-nav>                
+                <b-collapse id="nav-collapse" is-nav>
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item-dropdown text="Lang" right>
-                    <b-dropdown-item href="#">EN</b-dropdown-item>                    
+                    <b-dropdown-item href="#">EN</b-dropdown-item>
                     <b-dropdown-item href="#">RU</b-dropdown-item>
                     </b-nav-item-dropdown>
 
@@ -29,13 +29,13 @@
         </div>
         <b-nav tabs>
             <b-nav-item :active="inputsEnable"  @click="ShowInputs">Ввод параметров</b-nav-item>
-            <b-nav-item :active="!inputsEnable" @click="ShowGraphs">Графики</b-nav-item>
+            <b-nav-item :active="!inputsEnable" @click="ShowGraphs">Жирафики</b-nav-item>
         </b-nav>
         <div v-if="inputsEnable">
             <WriteParams @calc="calcGood"></WriteParams>
         </div>
          <div v-if="!inputsEnable">
-            <!-- <Charts></Charts> -->
+              <Charts></Charts>
             <component :is="componentsChart" v-if="componentsChart"/>
         </div>
     </div>
@@ -48,7 +48,7 @@ export default {
         RandomForest: () => import('./ForestChart.vue'),
     },
     data(){
-        
+
         return{
             inputsEnable: true,
             componentsChart: null,
@@ -59,11 +59,11 @@ export default {
             // console.log("Algoritm", algos);
             if(algos == "Random Forest"){
                 this.componentsChart = () => import('./ForestChart.vue');
-            }else if(algos == "Hist"){                
+            }else if(algos == "Hist"){
                 this.componentsChart = () => import('./Hist.vue');
-            }else if(algos == "Umap"){                
+            }else if(algos == "Umap"){
                 this.componentsChart = () => import('./Umap.vue');
-            }else if(algos == "CNN"){                
+            }else if(algos == "CNN"){
                 this.componentsChart = () => import('./CNN.vue');
             }else{
                 this.componentsChart = () => import('./Charts.vue');
@@ -80,4 +80,3 @@ export default {
     }
 }
 </script>
-

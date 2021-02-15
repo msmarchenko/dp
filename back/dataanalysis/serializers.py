@@ -7,9 +7,9 @@ from .models import Measurements
 from.models import User
 
 class UserSerializer(serializers.ModelSerializer):
- 
+
     date_joined = serializers.ReadOnlyField()
- 
+
     class Meta(object):
         model = User
         fields = ('id', 'email', 'first_name', 'last_name',
@@ -24,13 +24,14 @@ class CompositionSerializer(serializers.ModelSerializer):
 class ParameterSerializer(serializers.ModelSerializer):
     class Meta:
         model = Parameter
-        fields = '__all__'
+        fields = ('id', 'name', 'definition_id', 'position')
+#        fields = '__all__'       
 
 class MachineSerializer(serializers.ModelSerializer):
     class Meta:
         model = Machine
         fields = '__all__'
-        
+
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order

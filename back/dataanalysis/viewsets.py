@@ -41,7 +41,7 @@ class MeasurementsViewSet(viewsets.ModelViewSet):
     queryset = Measurements.objects.all()
     serializer_class = MeasurementsSerializer
 
-class CalculateViewset(viewsets.ViewSet):
+class CalculateViewSet(viewsets.ViewSet):
     @action(detail=False, methods=['post'])
     def calc(self, request):
         data = request.data
@@ -57,4 +57,13 @@ class CalculateViewset(viewsets.ViewSet):
         if data['algos'] == "Hist":
             ret = Calculations.Hist(data['machine'])
             return Response(ret)
+        return Response(request.data)
+
+class EbemViewSet(viewsets.ModelViewSet):
+    queryset = Measurements.objects.all()
+    serializer_class = MeasurementsSerializer
+    @action(detail=False, methods=['get'])
+    def ebem(self, request):
+        print("ebemvrot")
+        data = request.data
         return Response(request.data)

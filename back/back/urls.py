@@ -21,7 +21,7 @@ from django.conf.urls import url, include
 from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
-
+from dataanalysis.views import aboutview
 
 
 urlpatterns = [
@@ -30,5 +30,6 @@ urlpatterns = [
     url(r'^auth-jwt/', obtain_jwt_token),
     url(r'^auth-jwt-refresh/', refresh_jwt_token),
     url(r'^auth-jwt-verify/', verify_jwt_token),
+    url(r'givedate', aboutview),
     # path('', TemplateView.as_view(template_name='index.html'))
 ]

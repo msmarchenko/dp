@@ -7,18 +7,18 @@
     </div>
 
     <fieldset>
-       
+
       <legend>Авторизация</legend>
       <div>
         <label class="label" for="email">Email</label>
         <input type="email" name="email" id="email" required=""
                :class="{ email , error: !email.valid }"
                v-model="email.value">
-      </div>      
+      </div>
       <div>
         <label class="label" for="email">Пароль</label>
         <input type="password" name="email" id="email" v-model="password">
-      </div> 
+      </div>
       <div>
         <input type="submit" value="Войти">
       </div>
@@ -31,7 +31,6 @@
 import axios from 'axios';
 var emailRegExp = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 export default {
-    
     data: function() {
     return {
       email: {

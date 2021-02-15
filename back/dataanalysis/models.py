@@ -13,7 +13,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     An abstract base class implementing a fully featured User model with
     admin-compliant permissions.
- 
+
     """
     email = models.EmailField(max_length=40, unique=True)
     first_name = models.CharField(max_length=30, blank=True)
@@ -21,12 +21,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     date_joined = models.DateTimeField(default=timezone.now)
- 
+
     objects = UserManager()
- 
+
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
- 
+
     def save(self, *args, **kwargs):
         super(User, self).save(*args, **kwargs)
         return self
@@ -41,22 +41,27 @@ class Composition(models.Model):
 
 class Cnn_Model(models.Model):
     # def getModel():
-    #     return 
+    #     return
     def predict (X):
         model  = load_model('cnn.h5', compile=False)
         return model.predict(X)
 
 class Parameter(models.Model):
     class Meta:
-        unique_together = (('name'),)        
-    readonly_fields = ('definitionid',) 
+        constraints = [
+            models.UniqueConstraint(fields=['definition_id', 'name'], name='definition_id_and_parameter_name_constraint')
+        ]
+    readonly_fields = ('definition_id',)
     TYPE_CHOICES = (
         ('Control', 'Control'),
         ('Quality', 'Quality'),
     )
     name = models.CharField(max_length=50)
-    definitionid = models.IntegerField(blank=True, null=True)
-    position = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Quality')
+    definition_id = models.CharField(max_length=10)#, choices=TYPE_CHOICES, default='Quality')
+    position= models.CharField(max_length=50)
+#    definition_id = models.IntegerField(blank=True, null=True)
+#    position = models.CharField(max_length=10, choices=TYPE_CHOICES, default='Quality')
+
     def __str__(self):
         return f"Name: {self.name}"
 
@@ -99,4 +104,4 @@ class Measurements(models.Model):
         ]
 
     def __str__(self):
-        return f"DateTime: {self.date}, Composition: {self.composition}, Parameter:{self.parameter}"    
+        return f"DateTime: {self.date}, Composition: {self.composition}, Parameter:{self.parameter}"
